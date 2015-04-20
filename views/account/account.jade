@@ -1,0 +1,99 @@
+extends ../layout
+
+block content
+
+
+  .page-header
+    h1 Account Settings
+
+  p 
+    b Please note: 
+    | you can edit the information visible to the public in the 
+    a(href='/profile') My Profile 
+    | section.
+
+  hr
+  h3 Update Contact Details
+  form.form-horizontal(action='/account/profile', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-2.control-label(for='email') Email*
+      .col-sm-8
+          input.form-control(type='text', name='email', id='email', value='#{user.email}' placeholder='you@website.com' required)
+    .form-group
+      label.col-sm-2.control-label(for='phone') Phone*
+      .col-sm-8
+          input.form-control(type='text', name='phone', id='phone', value='#{user.profile.phone}' placeholder='+1 777 777' required)
+    .form-group
+      .col-sm-offset-2.col-sm-6
+        button.btn.btn.btn-primary(type='submit')
+          //span.ion-locked
+          | Update
+
+  hr
+
+  .row
+    .col-sm-6
+      h3 Change Password
+      form.form-horizontal(action='/account/password', method='POST')
+        input(type='hidden', name='_csrf', value=_csrf)
+        .form-group
+          label.col-sm-6.control-label(for='password') New Password
+          .col-sm-6
+            input.form-control(type='password', name='password', id='password')
+        .form-group
+          label.col-sm-6.control-label(for='confirmPassword') Confirm Password
+          .col-sm-6
+            input.form-control(type='password', name='confirmPassword', id='confirmPassword')
+        .form-group
+          .col-sm-offset-6.col-sm-6
+            button.btn.btn.btn-primary(type='submit')
+              span.ion-locked
+              | Change Password
+    .col-sm-6
+
+      h3 Linked Accounts
+
+      //if user.instagram
+        p: a.text-danger(href='/account/unlink/instagram') Unlink your Instagram account
+      //else
+        p: a(href='/auth/instagram') Link your Instagram account
+
+      //if user.google
+        p: a.text-danger(href='/account/unlink/google') Unlink your Google account
+      //else
+        p: a(href='/auth/google') Link your Google account
+
+      if user.facebook
+        p: a.text-danger(href='/account/unlink/facebook') Unlink your Facebook account
+      else
+        p: a(href='/auth/facebook') Link your Facebook account
+
+      //if user.twitter
+        p: a.text-danger(href='/account/unlink/twitter') Unlink your Twitter account
+      //else
+        p: a(href='/auth/twitter') Link your Twitter account
+
+
+
+
+  h3 Delete Account
+
+  p You can delete your account, but keep in mind this action is irreversible.
+  form(action='/account/delete', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    button.btn.btn-danger(type='submit')
+      span.ion-trash-b
+      | Delete my account
+
+
+
+  //if user.github
+    p: a.text-danger(href='/account/unlink/github') Unlink your GitHub account
+  //else
+    p: a(href='/auth/github') Link your GitHub account
+
+  //if user.linkedin
+    p: a.text-danger(href='/account/unlink/linkedin') Unlink your LinkedIn account
+  //else
+    p: a(href='/auth/linkedin') Link your LinkedIn account

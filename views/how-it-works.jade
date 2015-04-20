@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 How it works
+
+  .row
+    .col-sm-6
+      h2 Seeking cultural experiences?
+      .empty-space
+      ol(style='font-size: 1.4em;')
+        li Explore cultural and heritage experiences offered by locals
+        li Connect with the culturist to arrange the time, date and payment of the activitiy
+        li Enjoy a new way of travelling with the locals
+      .empty-space
+      p
+        a.btn.btn-large.btn-cta(href='/experiences/all', role='button') Find a way »
+      .empty-space
+
+    .col-sm-6
+      h2 Share a unique cultural experience
+      .empty-space
+      ol(style='font-size: 1.4em;')
+        li Signup to list your cultural experience for others to see
+        li Receive notifications of interest from interested travelers
+        li Enjoy sharing your local knowledge with the outside world
+      .empty-space
+      p
+        a.btn.btn-large.btn-secondary(href='/signup', role='button') Lead the way »
+      .empty-space

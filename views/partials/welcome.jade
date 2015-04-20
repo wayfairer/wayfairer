@@ -1,0 +1,8 @@
+if user
+  if (!user.profile.name || !user.profile.bio)
+    .alert.alert-success.fade.in
+      p.lead Welcome to wayfairer! You will want to complete your public profile before listing an experience.
+      .empty-space
+      a.btn.btn.btn-primary(href='/profile')
+        span.ion-edit
+        | Update Public Profile

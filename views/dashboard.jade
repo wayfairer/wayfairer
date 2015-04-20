@@ -1,0 +1,60 @@
+extends layout
+
+block content
+
+  .page-header
+    h1 Dashboard
+  
+  p.lead This is where you can see your current listings and your profile as ethical travellers will see it.
+  .empty-space
+
+  .col-lg-6.col-sm-12
+    h3.h3__has-actions My Experiences
+    a.btn.btn-secondary.btn-right(href='/experience/new')
+      span.ion-plus
+      | Add New
+    hr
+    
+    each activity in activities
+      if (activity.media.img.cover)
+        .activity-card(style='background-image:url(#{activity.media.img.cover})')
+          a(href='/view/'+activity._id)
+            h3.activity-card--title= activity.title
+          a(href='/edit/'+activity._id) (Update)
+      else
+        .activity-card
+          a(href='/view/'+activity._id)
+            h3.activity-card--title= activity.title
+          a(href='/edit/'+activity._id) (Update)
+
+
+
+    -if (activities.length < 1)
+      p Your haven't listed any experiences yet.
+
+    hr
+    .empty-space
+
+  .col-lg-6.col-sm-12
+    h3.h3__has-actions Public Profile
+    a.btn.btn.btn-primary.btn-right(href='/profile')
+      span.ion-edit
+      | Update
+    hr
+
+    if (user.profile.picture)
+      .vcard--profile-image(style='background-image:url(#{user.profile.picture})')
+    else
+      .vcard--profile-image
+
+    if user.profile.name
+      p.vcard-info Name: #{user.profile.name}
+    if user.profile.location
+      p.vcard-info.vcard-info__location Location: #{user.profile.location}
+    //if user.profile.website
+      p.vcard-info.vcard-info__website Website: 
+        a(href='#{user.profile.website}' target='blank' rel='nofollow') #{user.profile.website}
+    if user.profile.bio
+      p.vcard-description Bio: #{user.profile.bio}
+    hr
+    .empty-space

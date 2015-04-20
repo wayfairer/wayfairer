@@ -1,0 +1,114 @@
+extends layout
+
+block content
+
+  .page-header
+    h1 Public Profile
+  
+  p.lead Writing a bit about yourself, your story and your cultural connection can guide potential ethical travelers (the wayfairers) on how to be your guests.
+
+
+  form.form-horizontal(action='/profile/edit', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-2.control-label(for='name') Name*
+      .col-sm-8
+          input.form-control(type='text', name='name', id='name', value='#{user.profile.name}' placeholder='John Doe' required)
+    .form-group
+      label.col-sm-2.control-label(for='name') Photo*
+      .col-sm-8
+          input.form-control(type='text', name='picture', id='picture', value='#{user.profile.picture}' placeholder='http://facebook.com/me/photo/jpg')
+    .form-group
+      label.col-sm-2.control-label(for='bio') Bio*
+      .col-sm-8
+          textarea.form-control(name='bio', id='bio' rows='7' placeholder='e.g. I am John I am from  the east Caribbean, I have been learning traditional cooking from my elders, I usually travel between europe and the west indies where I am happy to share my cultural heritage with new experiences enthusiast' required)
+            | #{user.profile.bio}
+    .form-group
+      label.col-sm-2.control-label(for='location') Location
+      .col-sm-8
+          textarea.form-control(name='location', id='location' rows='3' placeholder='e.g. Rue paix, Paris, Isles de France, France')
+            | #{user.profile.location}
+
+    .form-group
+      label.col-sm-2.control-label(for='website') Website
+      .col-sm-8
+        input.form-control(type='text', name='website', id='website', value='#{user.profile.website}' placeholder='http://wayfairer.co')
+    .form-group
+      label.col-sm-2.control-label(for='languages') Languages
+      .col-sm-8
+        input.form-control(type='text', name='languages', id='languages', value='#{user.profile.languages}' placeholder='e.g. English, French')
+
+
+
+    .form-group
+      label.col-sm-2.control-label(for='role') Your Role
+      .col-sm-5
+          .checkbox
+              label
+                input(type='checkbox' name='roleIndividual' value='true' checked=user.profile.role.individual ? 'checked' : undefined )
+                span Individual
+
+          .checkbox
+              label
+                input(type='checkbox' name='roleCommunityMember' value='true' checked=user.profile.role.communityMember ? 'checked' : undefined )
+                span Community Member
+
+          .checkbox
+              label
+                input(type='checkbox' name='roleTraditionalLandOwner' value='true' checked=user.profile.role.traditionalLandOwner ? 'checked' : undefined )
+                span Traditional Land Owner
+
+          .checkbox
+              label
+                input(type='checkbox' name='roleCulturalMediator' value='true' checked=user.profile.role.culturalMediator ? 'checked' : undefined )
+                span Cultural Mediator
+      .col-sm-5
+          .checkbox
+              label
+                input(type='checkbox' name='roleCulturalArtOrganisation' value='true' checked=user.profile.role.culturalArtOrganisation ? 'checked' : undefined )
+                span Cultural/Art organisation
+
+          .checkbox
+              label
+                input(type='checkbox' name='roleTourismBureau' value='true' checked=user.profile.role.tourismBureau ? 'checked' : undefined )
+                span Tourism Bureau
+
+          .checkbox
+              label
+                input(type='checkbox' name='roleEducationProvider' value='true' checked=user.profile.role.educationProvider ? 'checked' : undefined )
+                span Education Provider
+
+          .checkbox
+              label
+                input(type='checkbox' name='roleOther' value='true' checked=user.profile.role.other ? 'checked' : undefined )
+                span Other
+
+
+    //user.profile.registration.ngo = req.body.ngoRegistration || false;
+    //user.profile.registration.sole = req.body.soleRegistration || false;
+    //user.profile.registration.govOrg = req.body.govOrgRegistration || false;
+    //user.profile.registration.socialEnterprise = req.body.socialEnterpriseRegistration || false;
+    //user.profile.registration.none = req.body.noneRegistration || false;
+
+
+
+    .form-group
+      label.col-sm-2.control-label(for='role') Organisation Type
+      .col-sm-5
+          select(name='registrationType')
+            option(value='unknown') Choose
+            option(value='ngo' selected=user.profile.registrationType == 'ngo') NGO/Non for Profit
+            option(value='sole' selected=user.profile.registrationType == 'sole') Sole Registration
+            option(value='govOrg' selected=user.profile.registrationType == 'govOrg') Government Organisation
+            option(value='socialEnterprise' selected=user.profile.registrationType == 'socialEnterprise') Social Enterprise
+            option(value='none' selected=user.profile.registrationType == 'none') None
+
+    //.form-group
+      label.col-sm-2.control-label(for='gravatar') Gravatar
+      .col-sm-10
+        img(src="#{user.gravatar()}", class='profile', width='100', height='100')
+    .form-group
+      .col-sm-offset-2.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          span.ion-edit
+          | Update Profile

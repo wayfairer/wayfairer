@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 List New Experience
+
+
+  form.form-horizontal.form--activity(role='form', method='POST', action='/experience/new')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label(class='col-sm-2 control-label', for='title') Title*
+      .col-sm-8
+        input.form-control(type='text', name='title', id='title', placeholder='e.g. Traditional Afro-Caribbean Cooking' autofocus=true required)
+    .form-group
+      label(class='col-sm-2 control-label', for='image') Image URL*
+      .col-sm-8
+        input.form-control(type='text', name='image', id='image', placeholder='e.g. http://placehold.it/1900x600')
+    .form-group
+      label(class='col-sm-2 control-label', for='strapline') Strapline*
+      .col-sm-8
+        input.form-control(type='text', name='strapline', id='strapline', placeholder='e.g. An Introduction to the Magic of Traditional Afro-Caribbean Cooking' required)
+    .form-group
+      label(class='col-sm-2 control-label', for='description') Description*
+      .col-sm-8
+        textarea.form-control(type='text', name='description', id='description', rows='7', placeholder="Please indicate why is the experience that you share is considered unique experience and representative of your regions, country, tradition and customs? Is there a cost associated to the experience is it free or do you have other ways to exchange?" required)
+    .form-group
+      label(class='col-sm-2 control-label', for='availability') Available Time/Date
+      .col-sm-8
+        input.form-control(type='text', name='availability', id='availability', placeholder='e.g. Every Weekday, 8pm (localtime)')
+    //.form-group
+      label(class='col-sm-2 control-label', for='description') Image
+      .col-sm-8
+          .cloudinary-image
+
+            input.cloudinary-fileupload(name="file" type="file" data-cloudinary-field="image_id" data-form-data='')
+
+    .form-group
+      label(class='col-sm-2 control-label', for='acceptedCurrency') Accepted Currency*
+      .col-sm-2
+          input.form-control(type='text', name='acceptedCurrency', id='acceptedCurrency', placeholder='e.g. USD' required)
+
+      label(class='col-sm-4 control-label', for='cost') Price (free = 0, undecided = leave blank)
+      .col-sm-2
+        input.form-control(type='text', name='cost', id='cost', placeholder='e.g. 20')
+
+    .form-group
+      label(class='col-sm-2 control-label', for='address') Address
+      .col-sm-8
+        textarea.form-control(type='text', name='address', placeholder='e.g. Pitanjara Cultural Centre, the Gap, Alice Springs, 0870, NT Australia' id='address', rows='3')
+    .form-group
+      label.col-sm-2.control-label(for='status') Make visible?
+      .col-sm-8
+        select(name='status')
+          option(value='active') Yes
+          option(value='inactive') No
+    .form-group
+      .col-sm-offset-2.col-sm-8
+        button.btn.btn-primary(type='submit')
+          span.ion-plus
+          | List
