@@ -2,102 +2,115 @@ extends ../layout
 
 
 mixin hero
-    h1.hero-headline= activity.title
-    p.hero-strapline= activity.strapline
+	h1.hero-headline= activity.title
+	p.hero-strapline= activity.strapline
 
-    .empty-space
-    if isOwner
-        a.btn.btn.btn-secondary(href='/edit/'+activity._id)
-          | Update Listing
-    else
-        a.btn.btn.btn-cta
-          | I want to do this
+	.empty-space
+
+	if isOwner
+		a.btn.btn.btn-secondary(href='/edit/'+activity._id)
+			| Update Listing
+	else
+		a.btn.btn.btn-cta(data-toggle="modal" data-target="#registerInterestModal")
+			| I want to do this
 
 
 
 block content
 
-  .container
-    if (activity.media.img.cover) 
-      .hero(style='background-image:url(#{activity.media.img.cover})')
-        mixin hero
-    else
-      .hero
-        mixin hero
+	.container
+		if (activity.media.img.cover) 
+			.hero(style='background-image:url(#{activity.media.img.cover})')
+				mixin hero
+		else
+			.hero
+				mixin hero
 
-  .empty-space
-  .empty-space
+		.empty-space
+		.empty-space
 
-  .col-sm-8
+		.col-sm-8
 
-    h3 Description
-    p= activity.description
+			h3 Description
+			p= activity.description
 
-    .empty-space
-
-
-    h3 Details
-    if (activity.address)
-        p Address: #{activity.address}
-
-    if (activity.availability)
-        p Availability: #{activity.availability}
-
-    if (activity.cost)
-        if (activity.cost == 0)
-            p Price: FREE, donations welcome
-        else
-            p Price: #{activity.cost}
-    else
-        p Price: Please ask
-
-    if (activity.acceptedCurrency)
-        p Accepted currency: #{activity.acceptedCurrency}
+			.empty-space
 
 
+			h3 Details
+			if (activity.address)
+				p Address: #{activity.address}
 
-    link(href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css")
-    #mc_embed_signup
-      form.validate(action="//wayfairer.us10.list-manage.com/subscribe/post?u=b2b0df4b93f3f0cb25afe147e&amp;id=6b10ced5d9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate)
-        #mc_embed_signup_scroll
-      
-        input.email(type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="email address" required)
-        input(type="hidden" value="#{activity._id}" name="ACTIVITYID" id="mce-ACTIVITYID")
-          
-        div(style="position: absolute; left: -5000px;")
-          input(type="text" name="b_b2b0df4b93f3f0cb25afe147e_6b10ced5d9" tabindex="-1" value="")
+			if (activity.availability)
+				p Availability: #{activity.availability}
 
-        .clear
-          input.button(type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe")
+			if (activity.cost)
+				if (activity.cost == 0)
+					p Price: FREE, donations welcome
+				else
+					p Price: #{activity.cost}
+			else
+				p Price: Please ask
 
-
-  .col-sm-4
-
-
-    h3 Culturist Guide
-    .vcard
-      if (ownerProfile.picture)
-        .vcard--profile-image(style='background-image:url(#{ownerProfile.picture})')
-      else
-        .vcard--profile-image
-
-      h2.vcard--name= ownerProfile.name
-      if ownerProfile.location
-        p.vcard--info.vcard--info__location 
-            b Location: 
-            | #{ownerProfile.location}
-      //if ownerProfile.website
-        p.vcard--info.vcard--info__website 
-            b Website: 
-            a(href='#{ownerProfile.website}' target='blank' rel='nofollow') #{ownerProfile.website}
-      p.vcard--description
-               b Bio: 
-               | #{ownerProfile.bio}
-     
+			if (activity.acceptedCurrency)
+				p Accepted currency: #{activity.acceptedCurrency}
 
 
-  .col-sm-12
-    if !isOwner
-      .empty-space
-      a.btn.btn.btn-cta
-            | I want to do this
+
+
+		.col-sm-4
+
+			h3 Culturist Guide
+			.vcard
+				if (ownerProfile.picture)
+					.vcard--profile-image(style='background-image:url(#{ownerProfile.picture})')
+				else
+					.vcard--profile-image
+
+			h2.vcard--name= ownerProfile.name
+				if ownerProfile.location
+					p.vcard--info.vcard--info__location 
+						b Location: 
+						| #{ownerProfile.location}
+				
+					p.vcard--info.vcard--info__website 
+						b Website: 
+						a(href='#{ownerProfile.website}' target='blank' rel='nofollow') #{ownerProfile.website}
+					p.vcard--description
+						b Bio: 
+						| #{ownerProfile.bio}
+
+
+		.col-sm-12
+			if !isOwner
+				.empty-space
+				a.btn.btn.btn-cta(data-toggle="modal" data-target="#registerInterestModal")
+					| I want to do this
+
+	#registerInterestModal.modal.fade.experience-register-interest-modal(tabindex='-1', role='dialog', aria-labelledby='registerInterestModal', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true')
+					h3#myModalLabel.modal-title Register your interest
+
+				.modal-body
+					p Please enter details...
+
+					link(href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css")
+					#mc_embed_signup
+						form.validate(action="//wayfairer.us10.list-manage.com/subscribe/post?u=b2b0df4b93f3f0cb25afe147e&amp;id=6b10ced5d9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate)
+							#mc_embed_signup_scroll
+						
+								input.email(type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="email address" required)
+								input(type="hidden" value="#{activity._id}" name="ACTIVITYID" id="mce-ACTIVITYID")
+							
+								div(style="position: absolute; left: -5000px;")
+									input(type="text" name="b_b2b0df4b93f3f0cb25afe147e_6b10ced5d9" tabindex="-1" value="")
+
+								.clear
+								input.button.btn.btn-cta(type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe")
+
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+		

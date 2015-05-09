@@ -12,6 +12,7 @@
         | rer.co
     .collapse.navbar-collapse
       ul.nav.navbar-nav
+
         if !user
           li(class=title=='Home'?'active':undefined)
             a(href='/') Home
@@ -29,6 +30,16 @@
         //li(class=title=='Contact'?'active':undefined)
           a(href='/contact') Contact
       ul.nav.navbar-nav.navbar-right
+
+        li
+          div(id="google_translate_element")
+          script.
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'de,en,es,fr,it,ja,pt,tr,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+            }
+
+          script(type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit")
+
         if !user
           li(class=title=='Login'?'active':undefined)
             a(href='/login') Login
@@ -38,7 +49,7 @@
           li.dropdown(class=title=='Account'?'active':undefined)
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               if user.profile.picture
-                img(src='#{user.profile.picture}')
+                img.navbar-img(src='#{user.profile.picture}')
               //else
                 img(src='#{user.gravatar(60)}')
               | Hello 
