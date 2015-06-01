@@ -5,7 +5,8 @@ block content
   .page-header
     h1 Public Profile
   
-  p.lead Writing a bit about yourself, your story and your cultural connection can guide potential ethical travelers (the wayfairers) on how to be your guests.
+  if (user && user.isTourGuide)
+    p.lead Writing a bit about yourself, your story and your cultural connection can guide potential ethical travelers (the wayfairers) on how to be your guests.
 
 
   form.form-horizontal(action='/profile/edit', method='POST')
@@ -40,7 +41,7 @@ block content
 
 
 
-    .form-group
+    //.form-group
       label.col-sm-2.control-label(for='role') Your Role
       .col-sm-5
           .checkbox
@@ -92,7 +93,7 @@ block content
 
 
 
-    .form-group
+    //.form-group
       label.col-sm-2.control-label(for='role') Organisation Type
       .col-sm-5
           select(name='registrationType')

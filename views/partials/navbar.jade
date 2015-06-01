@@ -19,10 +19,11 @@
           li(class=title=='How it works'?'active':undefined)
             a(href='/how-it-works') How it works
         else
-          li(class=title=='Dashboard'?'active':undefined)
-            a(href='/dashboard') Dashboard
-          li(class=title=='New Experience'?'active':undefined)
-            a(href='/experience/new') List New Experience
+          if user.isTourGuide
+            li(class=title=='Dashboard'?'active':undefined)
+              a(href='/dashboard') Dashboard
+            li(class=title=='New Experience'?'active':undefined)
+              a(href='/experience/new') List New Experience
         li(class=title=='All Experiences'?'active':undefined)
             a(href='/experiences/all') Explore
         //li(class=title=='API Examples'?'active':undefined)

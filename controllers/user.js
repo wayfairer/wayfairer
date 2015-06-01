@@ -45,8 +45,11 @@ exports.postLogin = function(req, res, next) {
     }
     req.logIn(user, function(err) {
       if (err) return next(err);
-      req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect('/dashboard');
+      req.flash('success', { msg: 'Welcome! You have logged in successfully' });
+      if (user.isTourGuide)
+        res.redirect('/dashboard');
+      else
+        res.redirect('/experiences/all');
     });
   })(req, res, next);
 };
@@ -62,8 +65,8 @@ exports.logout = function(req, res) {
 };
 
 /**
- * GET /signup
- * Signup page.
+ * GET /signup, /wayfairer-signup
+ * Signup pages.
  */
 
 exports.getSignup = function(req, res) {
@@ -73,6 +76,12 @@ exports.getSignup = function(req, res) {
   });
 };
 
+exports.getSignupWayfairer = function(req, res) {
+  if (req.user) return res.redirect('/');
+  res.render('account/signup-tourist', {
+    title: 'Create Account'
+  });
+};
 /**
  * POST /signup
  * Create a new local account.
@@ -98,8 +107,14 @@ exports.postSignup = function(req, res, next) {
       phone: req.body.phone
     },
     password: req.body.password,
-    isTourGuide: req.body.isTourGuide,
+    isTourGuide: req.body.isTourGuide || false,
+    isTourist: req.body.isTourist || false,
   });
+
+
+  // Don't allow user to be both tourist & culturist
+  if (req.body.isTourGuide==true && req.body.isTourist==true)
+    user.isTourGuide = false;
 
   User.findOne({ email: req.body.email }, function(err, existingUser) {
     if (existingUser) {
@@ -393,7 +408,7 @@ exports.postForgot = function(req, res, next) {
  */
 
 exports.getDashboard = function(req, res) {
-  if (!req.user) return res.redirect('/');
+  if (!req.user || !req.user.isTourGuide) return res.redirect('/');
   
   // Find experiences by user
   Activity.find({userId: req.user._id}, function(err, activities) {

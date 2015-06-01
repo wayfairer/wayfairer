@@ -92,25 +92,46 @@ block content
 			.modal-content
 				.modal-header
 					button.close(type='button', data-dismiss='modal', aria-hidden='true')
-					h3#myModalLabel.modal-title Register your interest
+					h3#myModalLabel.modal-title I want to do this
 
 				.modal-body
-					p Please enter details...
-
-					link(href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css")
-					#mc_embed_signup
-						form.validate(action="//wayfairer.us10.list-manage.com/subscribe/post?u=b2b0df4b93f3f0cb25afe147e&amp;id=6b10ced5d9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate)
-							#mc_embed_signup_scroll
-						
-								input.email(type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="email address" required)
-								input(type="hidden" value="#{activity._id}" name="ACTIVITYID" id="mce-ACTIVITYID")
-							
-								div(style="position: absolute; left: -5000px;")
-									input(type="text" name="b_b2b0df4b93f3f0cb25afe147e_6b10ced5d9" tabindex="-1" value="")
-
-								.clear
-								input.button.btn.btn-cta(type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe")
+					if !user
+						// login
+						p You must sign-up &amp; login in order to contact the Culturist
+						a.btn.btn.btn-primary(href='/wayfairer-signup') Register as a Wayfairer
+						|  or 
+						a.btn.btn.btn-secondary(href='/login') Login
+					else
+						// contact details
+						p Contact details here..
 
 				.modal-footer
 					button.btn.btn-default(type='button', data-dismiss='modal') Close
 		
+	//#registerInterestModal.modal.fade.experience-register-interest-modal(tabindex='-1', role='dialog', aria-labelledby='registerInterestModal', aria-hidden='true')
+			.modal-dialog
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-hidden='true')
+						h3#myModalLabel.modal-title Register your interest
+
+					.modal-body
+						p Please enter details...
+
+						link(href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css")
+						#mc_embed_signup
+							form.validate(action="//wayfairer.us10.list-manage.com/subscribe/post?u=b2b0df4b93f3f0cb25afe147e&amp;id=6b10ced5d9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate)
+								#mc_embed_signup_scroll
+							
+									input.email(type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="email address" required)
+									input(type="hidden" value="#{activity._id}" name="ACTIVITYID" id="mce-ACTIVITYID")
+								
+									div(style="position: absolute; left: -5000px;")
+										input(type="text" name="b_b2b0df4b93f3f0cb25afe147e_6b10ced5d9" tabindex="-1" value="")
+
+									.clear
+									input.button.btn.btn-cta(type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe")
+
+					.modal-footer
+						button.btn.btn-default(type='button', data-dismiss='modal') Close
+			

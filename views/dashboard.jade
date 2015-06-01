@@ -8,7 +8,7 @@ block content
   p.lead This is where you can see your current listings and your profile as ethical travellers will see it.
   .empty-space
 
-  .col-lg-6.col-sm-12
+  .col-lg-6.col-md-12
     h3.h3__has-actions My Experiences
     a.btn.btn-secondary.btn-right(href='/experience/new')
       span.ion-plus
@@ -20,12 +20,16 @@ block content
         .activity-card(style='background-image:url(#{activity.media.img.cover})')
           a(href='/view/'+activity._id)
             h3.activity-card--title= activity.title
-          a(href='/edit/'+activity._id) (Update)
+          a.btn.btn.btn-neutral.btn-right(href='/edit/'+activity._id)
+            span.ion-edit
+            | Update
       else
         .activity-card
           a(href='/view/'+activity._id)
             h3.activity-card--title= activity.title
-          a(href='/edit/'+activity._id) (Update)
+          a.btn.btn.btn-neutral.btn-right(href='/edit/'+activity._id)
+            span.ion-edit
+            | Update
 
 
 
@@ -35,7 +39,7 @@ block content
     hr
     .empty-space
 
-  .col-lg-6.col-sm-12
+  .col-lg-5.col-md-12.pull-right-lg
     h3.h3__has-actions Public Profile
     a.btn.btn.btn-primary.btn-right(href='/profile')
       span.ion-edit
