@@ -5,16 +5,17 @@ block content
   .page-header
     h1= title
 
-  form.form-horizontal(action='/edit/#{activity._id}', method='POST')
+  form.form-horizontal(action='/edit/#{activity._id}', method='POST' enctype='multipart/form-data')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-2.control-label(for='title') Title*
       .col-sm-8
         input.form-control(type='text', name='title', id='title', placeholder='e.g. Traditional Afro-Caribbean Cooking' value='#{activity.title}' required)
     .form-group
-      label(class='col-sm-2 control-label', for='image') Image URL*
+      label(class='col-sm-2 control-label', for='image') Image
       .col-sm-8
-        input.form-control(type='text', name='image', id='image', placeholder='e.g. http://placehold.it/1900x600' value='#{activity.media.img.cover}')
+        img(src=activity.media.img.cover, width='300')
+        input.form-control(type='file', name='image', id='image')
     .form-group
       label.col-sm-2.control-label(for='strapline') Strapline*
       .col-sm-8

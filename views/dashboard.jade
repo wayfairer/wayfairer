@@ -55,9 +55,6 @@ block content
       p.vcard-info Name: #{user.profile.name}
     if user.profile.location
       p.vcard-info.vcard-info__location Location: #{user.profile.location}
-    //if user.profile.website
-      p.vcard-info.vcard-info__website Website: 
-        a(href='#{user.profile.website}' target='blank' rel='nofollow') #{user.profile.website}
     if user.profile.bio
       p.vcard-description Bio: #{user.profile.bio}
     hr

@@ -24,9 +24,9 @@ module.exports = {
   sessionSecret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
 
   cloudinary: { 
-    cloud_name: 'hvijrq2ex', 
-    api_key: '865374837191999', 
-    api_secret: '-kYmY-5Um-j_jXZMAN4xzhJ9630' 
+    cloud_name: 'dxn1mknsp', 
+    api_key: '747552931236872', 
+    api_secret: 'kEv7d28WcBDWqLc4YmL4wX6vo5c' 
   },
 
   mailgun: {

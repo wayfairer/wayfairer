@@ -9,9 +9,11 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
+var multer  = require('multer')
 var csrf = require('lusca').csrf();
 var methodOverride = require('method-override');
-//var cloudinary = require('cloudinary');
+var cloudinary = require('cloudinary');
+
 
 var _ = require('lodash');
 var MongoStore = require('connect-mongo')(session);
@@ -59,13 +61,13 @@ mongoose.connection.on('error', function() {
  * Connect to Cloudinary.
  */
 
-//cloudinary.config(secrets.cloudinary);
+cloudinary.config(secrets.cloudinary);
 
 /**
  * CSRF whitelist.
  */
 
-var csrfExclude = ['/url1', '/url2'];
+var csrfExclude = ['/experience/new'];
 
 /**
  * Express configuration.
@@ -81,6 +83,9 @@ app.use(connectAssets({
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(multer({ dest: './uploads/'}))
+
 app.use(expressValidator());
 app.use(methodOverride());
 app.use(cookieParser());
@@ -95,6 +100,7 @@ app.use(passport.session());
 app.use(flash());
 app.use(function(req, res, next) {
   // CSRF protection.
+  //return next()
   if (_.contains(csrfExclude, req.path)) return next();
   csrf(req, res, next);
 });

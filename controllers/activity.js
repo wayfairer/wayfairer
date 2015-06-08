@@ -1,6 +1,6 @@
 var Activity = require('../models/Activity');
 var User = require('../models/User');
-//var cloudinary = require('cloudinary');
+var cloudinary = require('cloudinary');
 
 /**
  * GET /experiences/all
@@ -81,18 +81,18 @@ exports.getNewActivity = function(req, res) {
  */
 
 exports.postNewActivity = function(req, res) {
-  req.assert('title', 'Title cannot be blank').notEmpty();
+  
+  // Handle errors
+  /*req.assert('title', 'Title cannot be blank').notEmpty();
   req.assert('description', 'Description cannot be blank').notEmpty();
-
   var errors = req.validationErrors();
-
   if (errors) {
     req.flash('errors', errors);
     return res.redirect('/experience/new');
-  }
+  }*/
 
 
-
+  // Build activity object
   var title = req.body.title;
   var strapline = req.body.strapline;
   var description = req.body.description;
@@ -103,29 +103,6 @@ exports.postNewActivity = function(req, res) {
   var acceptedCurrency = req.body.acceptedCurrency;
   var address = req.body.address;
   var availability = req.body.availability;
-  var image = req.body.image;
-
-
-  console.log('cost '+cost);
-  console.log('acceptedCurrency '+acceptedCurrency);
-
-  /*
-  // Configuring cloudinary_cors direct upload to support old IE versions
-  var cloudinary_cors = "http://" + req.headers.host + "/cloudinary_cors.html";
-  // Create a new photo model and set it's default title
-  var photo = new Photo();
-  Photo.count().then(function(amount){
-    photo.title = "My Photo #"+(amount+1)+" (direct)";
-  })
-  .finally(function(){
-    /*res.render('photos/add_direct', {
-      photo:photo,
-      cloudinary_cors:cloudinary_cors
-    });
-    console.log('success!');
-  });
-*/
-
 
   var activity = new Activity({
     title: title,
@@ -140,16 +117,37 @@ exports.postNewActivity = function(req, res) {
     availability: availability,
     media: {
       img: {
-        _default: image,
-        cover: image
+        _default: "",
+        cover: ""
       }
     }
   });
 
-  activity.save(function(err, activity) {
-    if (err) return next(err);
-    return res.redirect('/view/'+activity.id);
+
+  // Upload image, then call complete
+  var imageURL = "";
+  cloudinary.uploader.upload(req.files.image.path, function(result) {
+    if (result.url) {
+      imageURL = result.url;
+      complete();
+    } else {
+      console.log('error');
+      return res.redirect('/experience/new');
+    }
   });
+
+
+  function complete() {
+    activity.media.img._default = imageURL;
+    activity.media.img.cover = imageURL;
+
+    activity.save(function(err, activity) {
+      if (err) return next(err);
+      console.log('activity saved');
+      return res.redirect('/view/'+activity.id);
+    });
+  }
+
 
 };
 
@@ -202,15 +200,34 @@ exports.postUpdateActivity = function(req, res) {
     activity.acceptedCurrency = req.body.acceptedCurrency;
     activity.address = req.body.address;
     activity.availability = req.body.availability;
-    activity.media.img._default = req.body.image;
-    activity.media.img.cover = req.body.image;
+    //activity.media.img._default = req.body.image;
+    //activity.media.img.cover = req.body.image;
 
 
-    activity.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Experience updated.' });
-      res.redirect('/edit/'+activity._id);
+    // Upload image, then call complete (ignore image upload error)
+    var imageURL = "";
+    cloudinary.uploader.upload(req.files.image.path, function(result) {
+      if (result.url) {
+        imageURL = result.url;
+        complete();
+      } else {
+        console.log('error');
+        complete();
+      }
     });
+
+    function complete() {
+      activity.media.img._default = imageURL;
+      activity.media.img.cover = imageURL;
+
+      activity.save(function(err) {
+        if (err) return next(err);
+        req.flash('success', { msg: 'Experience updated.' });
+        res.redirect('/edit/'+activity._id);
+      });
+    }
+
+
   });
 };
 
