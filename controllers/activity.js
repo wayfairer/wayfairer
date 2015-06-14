@@ -126,15 +126,19 @@ exports.postNewActivity = function(req, res) {
 
   // Upload image, then call complete
   var imageURL = "";
-  cloudinary.uploader.upload(req.files.image.path, function(result) {
-    if (result.url) {
-      imageURL = result.url;
-      complete();
-    } else {
-      console.log('error');
-      return res.redirect('/experience/new');
-    }
-  });
+  if (req.files.image && req.files.image.path) {
+    cloudinary.uploader.upload(req.files.image.path, function(result) {
+      if (result.url) {
+        imageURL = result.url;
+        complete();
+      } else {
+        console.log('error');
+        return res.redirect('/experience/new');
+      }
+    });
+  } else {
+    complete();
+  }
 
 
   function complete() {
@@ -206,15 +210,24 @@ exports.postUpdateActivity = function(req, res) {
 
     // Upload image, then call complete (ignore image upload error)
     var imageURL = "";
-    cloudinary.uploader.upload(req.files.image.path, function(result) {
-      if (result.url) {
-        imageURL = result.url;
-        complete();
-      } else {
-        console.log('error');
-        complete();
-      }
-    });
+
+    if (req.body.currentCover)
+      imageURL = req.body.currentCover;
+
+
+    if (req.files.image && req.files.image.path) {
+      cloudinary.uploader.upload(req.files.image.path, function(result) {
+        if (result.url) {
+          imageURL = result.url;
+          complete();
+        } else {
+          console.log('error');
+          complete();
+        }
+      });
+    } else {
+      complete();
+    }
 
     function complete() {
       activity.media.img._default = imageURL;

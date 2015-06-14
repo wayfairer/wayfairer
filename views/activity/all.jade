@@ -7,11 +7,15 @@ block content
 
 	p.lead Check out all the experiences on offer from around the world.
 
-	each activity in activities
-		if activity.status=='active'
-			if (activity.media.img.cover)
-				a.activity-card(href='/view/'+activity._id, style='background-image:url(#{activity.media.img.cover})')
-					h3.activity-card--title= activity.title
-			else
-				a.activity-card(href='/view/'+activity._id)
-					h3.activity-card--title= activity.title
+	row
+		each activity in activities
+			if activity.status=='active'
+				.col-md-6
+					if (activity.media.img.cover)
+						a.activity-card(href='/view/'+activity._id, style='background-image:url(#{activity.media.img.cover})')
+							h3.activity-card--title= activity.title
+					else
+						a.activity-card(href='/view/'+activity._id)
+							h3.activity-card--title= activity.title
+
+					br

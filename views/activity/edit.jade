@@ -14,7 +14,9 @@ block content
     .form-group
       label(class='col-sm-2 control-label', for='image') Image
       .col-sm-8
-        img(src=activity.media.img.cover, width='300')
+        if (activity.media.img.cover)
+          img(src=activity.media.img.cover, width='300')
+        input(type='hidden' name='currentCover' value=activity.media.img.cover)
         input.form-control(type='file', name='image', id='image')
     .form-group
       label.col-sm-2.control-label(for='strapline') Strapline*
