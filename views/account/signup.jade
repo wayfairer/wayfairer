@@ -5,7 +5,7 @@ block content
 
   .row
     .col-md-12
-      h3 Culturist Sign up
+      h3 Sign up
 
       .empty-space
 
@@ -30,13 +30,14 @@ block content
         .form-group
           .col-sm-offset-3.col-sm-7
             input(type='hidden' name='isTourGuide', value='true')
+            input(type='hidden' name='isTourist', value='true')
             button.btn.btn-success(type='submit')
               span.ion-person-add
               | Signup
 
       .empty-space
 
-      p.lead Traveller? you need to register as a 
+      //p.lead Traveller? you need to register as a 
         a(href='/wayfairer-signup') Wayfairer.
 
     //.col-md-6

@@ -5,11 +5,7 @@ block content
   .page-header
     h1 Public Profile
   
-  if (user && user.isTourGuide)
-    p.lead Writing a bit about yourself, your story and your cultural connection can guide potential ethical travelers (the wayfairers) on how to be your guests.
-
-
-  form.form-horizontal(action='/profile/edit', method='POST')
+  form.form-horizontal(action='/profile/edit', method='POST' enctype='multipart/form-data')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-2.control-label(for='name') Name*
@@ -18,7 +14,10 @@ block content
     .form-group
       label.col-sm-2.control-label(for='name') Photo*
       .col-sm-8
-          input.form-control(type='text', name='picture', id='picture', value='#{user.profile.picture}' placeholder='http://facebook.com/me/photo/jpg')
+          if (user.profile.picture)
+            img(src=user.profile.picture, width='300')
+          input(type='hidden' name='currentPicture' value=user.profile.picture)
+          input.form-control(type='file', name='picture', id='picture')
     .form-group
       label.col-sm-2.control-label(for='bio') Bio*
       .col-sm-8

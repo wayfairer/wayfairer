@@ -6,6 +6,7 @@ var passport = require('passport');
 var User = require('../models/User');
 var secrets = require('../config/secrets');
 var Activity = require('../models/Activity');
+var cloudinary = require('cloudinary');
 
 /**
  * GET /login
@@ -46,10 +47,7 @@ exports.postLogin = function(req, res, next) {
     req.logIn(user, function(err) {
       if (err) return next(err);
       req.flash('success', { msg: 'Welcome! You have logged in successfully' });
-      if (user.isTourGuide)
-        res.redirect('/dashboard');
-      else
-        res.redirect('/experiences/all');
+      res.redirect('/');
     });
   })(req, res, next);
 };
@@ -65,7 +63,7 @@ exports.logout = function(req, res) {
 };
 
 /**
- * GET /signup, /wayfairer-signup
+ * GET /signup
  * Signup pages.
  */
 
@@ -76,12 +74,7 @@ exports.getSignup = function(req, res) {
   });
 };
 
-exports.getSignupWayfairer = function(req, res) {
-  if (req.user) return res.redirect('/');
-  res.render('account/signup-tourist', {
-    title: 'Create Account'
-  });
-};
+
 /**
  * POST /signup
  * Create a new local account.
@@ -106,15 +99,10 @@ exports.postSignup = function(req, res, next) {
     profile: {
       phone: req.body.phone
     },
-    password: req.body.password,
-    isTourGuide: req.body.isTourGuide || false,
-    isTourist: req.body.isTourist || false,
+    password: req.body.password
   });
 
 
-  // Don't allow user to be both tourist & culturist
-  if (req.body.isTourGuide==true && req.body.isTourist==true)
-    user.isTourGuide = false;
 
   User.findOne({ email: req.body.email }, function(err, existingUser) {
     if (existingUser) {
@@ -155,13 +143,15 @@ exports.postUpdateProfile = function(req, res, next) {
     user.profile.gender = req.body.gender || '';
     user.profile.location = req.body.location || '';
     user.profile.website = req.body.website || '';
-    user.profile.picture = req.body.picture || '';
+
 
     user.save(function(err) {
       if (err) return next(err);
       req.flash('success', { msg: 'Profile information updated.' });
       res.redirect('/account');
     });
+  
+
   });
 };
 
@@ -450,12 +440,10 @@ exports.postUpdatePublicProfile = function(req, res, next) {
     user.profile.website = req.body.website || '';
     user.profile.languages = req.body.languages || '';
     user.profile.position = req.body.position || ''; // REDUNDANT
-
     user.profile.name = req.body.name || '';
 
-    user.profile.picture = req.body.picture || '';
 
-
+    /*
     user.profile.role.individual = req.body.roleIndividual || false;
     user.profile.role.communityMember = req.body.roleCommunityMember || false;
     user.profile.role.traditionalLandOwner = req.body.roleTraditionalLandOwner || false;
@@ -464,23 +452,50 @@ exports.postUpdatePublicProfile = function(req, res, next) {
     user.profile.role.tourismBureau = req.body.roleTourismBureau || false;
     user.profile.role.educationProvider = req.body.roleEducationProvider || false;
     user.profile.role.other = req.body.roleOther || '';
-
-    user.profile.registrationType = req.body.registrationType || 'unknown';
-    /*
-    user.profile.registration.ngo = req.body.ngoRegistration || false;
-    user.profile.registration.sole = req.body.soleRegistration || false;
-    user.profile.registration.govOrg = req.body.govOrgRegistration || false;
-    user.profile.registration.socialEnterprise = req.body.socialEnterpriseRegistration || false;
-    user.profile.registration.none = req.body.noneRegistration || false;
     */
+
+    //user.profile.registrationType = req.body.registrationType || 'unknown';
+
 
     user.profile.bio = req.body.bio || '';
 
-    user.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Profile information updated.' });
-      res.redirect('/profile');
-    });
+
+    console.log("update profile");
+
+
+    console.log(req.files);
+
+    // Upload image, then call complete
+    var imageURL = "";
+    if (req.body.currentPicture) {
+      imageURL = req.body.currentPicture;
+    }
+
+    if (req.files.picture && req.files.picture.path) {
+      console.log("attempting upload");
+      cloudinary.uploader.upload(req.files.picture.path, function(result) {
+        console.log("cloudinary response");
+        if (result.url) {
+          imageURL = result.url;
+        } else {
+          console.log('error');
+        }
+        complete();
+      });
+    } else {
+      complete();
+    }
+
+    function complete() {
+      user.profile.picture = imageURL || '';
+
+      user.save(function(err) {
+        if (err) return next(err);
+        req.flash('success', { msg: 'Profile information updated.' });
+        res.redirect('/profile');
+      });
+    }
+
   });
 };
 

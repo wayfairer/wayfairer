@@ -65,6 +65,9 @@ exports.getActivity = function(req, res) {
  * Add new experience form
  */
 exports.getNewActivity = function(req, res) {
+
+    if (!req.user) return res.redirect('account/signup');
+
     res.render('activity/new', {
     	title: 'New Experience'
   	});
