@@ -41,19 +41,24 @@ exports.getActivity = function(req, res) {
       console.log(user);
       var ownerProfile = user ? user.profile : null;
 
+      if (ownerProfile) {
       // If the user requesting data is logged in as activity owner
-      var isOwner = false;
-      if (req.user) {
-        isOwner = activity.userId == req.user.id ? true : false;
+        var isOwner = false;
+        if (req.user) {
+          isOwner = activity.userId == req.user.id ? true : false;
+        }
+
+        res.render('activity/index', {
+          title: activity.title,
+          activity: activity,
+          ownerProfile: ownerProfile,
+          isOwner: isOwner 
+
+        });
+      } else {
+        return res.render('error/not-found');
       }
 
-      res.render('activity/index', {
-        title: activity.title,
-        activity: activity,
-        ownerProfile: ownerProfile,
-        isOwner: isOwner 
-
-      });
     });
 
   });
@@ -66,7 +71,7 @@ exports.getActivity = function(req, res) {
  */
 exports.getNewActivity = function(req, res) {
 
-    if (!req.user) return res.redirect('account/signup');
+    if (!req.user) return res.redirect('/signup');
 
     res.render('activity/new', {
     	title: 'New Experience'

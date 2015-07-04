@@ -398,7 +398,7 @@ exports.postForgot = function(req, res, next) {
  */
 
 exports.getDashboard = function(req, res) {
-  if (!req.user || !req.user.isTourGuide) return res.redirect('/');
+  if (!req.user) return res.redirect('/');
   
   // Find experiences by user
   Activity.find({userId: req.user._id}, function(err, activities) {
