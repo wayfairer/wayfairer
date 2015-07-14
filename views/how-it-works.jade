@@ -6,76 +6,77 @@ block content
   p.lead
    | Wayfairer is  a online platform allowing local people to connect with travellers who want to participate in and contribute to the communities they visit.  We aim to empower local people to maintain their cultures, heritage and environment and to take charge of their future.
 
-  if (!user)
-    .row
-      .col-sm-6
-        h2 Seeking cultural experiences?
-        .empty-space
-        ol(style='font-size: 1.4em;')
-          li Explore cultural and heritage experiences offered by locals
-          li Connect with the culturist to arrange the time, date and payment of the activitiy
-          li Enjoy a new way of travelling with the locals
-        .empty-space
-        p
-          a.btn.btn-large.btn-cta(href='/experiences/all', role='button') Find a way »
-        .empty-space
-
-      .col-sm-6
-        h2 Share a unique cultural experience
-        .empty-space
-        ol(style='font-size: 1.4em;')
-          li Signup to list your cultural experience for others to see
-          li Receive notifications of interest from interested travelers
-          li Enjoy sharing your local knowledge with the outside world
-        .empty-space
-        p
-          a.btn.btn-large.btn-secondary(href='/signup', role='button') Lead the way »
-        .empty-space
-
-    hr
-
-
-    h2 Why be a Wayfairer?
-      .row
-        .col-sm-4
-          .empty-space
-          p
-            b Learn and grow
-          p As a Wayfairer you will get to experience the lives and cultures of the local people.  Hopefully this will give you a new perspective on your own life.  Culturists register with Wayfairer because they have unique knowledge and cultural riches to share.  You could learn about anything from a new dance style, to ancient rituals, from ethnic recipes and wild food gathering to traditional building practices. 
-        .col-sm-4
-          .empty-space
-          p
-            b Meet people
-          p During your experiences you will have the opportunity to interact with locals and other travellers in a meaningful way.  This is a great opportunity for forming new and diverse connections and friendships.
-        .col-sm-4
-          .empty-space
-          p
-            b Fair exchange
-          p You can participate in the empowerment of local communities through providing them with a source of income or through collaborating with them in other ways.  You may have skills and knowledge that you can contribute.
-
+  .row
+    .col-sm-6
+      h2 Seeking cultural experiences?
       .empty-space
-      p.text-center
-        a.btn.btn-large.btn-cta(href='/signup', role='button') Sign up »
-    hr
-
-    h2 Why be a Culturist?
-      .row
-        .col-sm-4
-          .empty-space
-          p
-            b Share your knowledge and culture
-          p Do you have unique local knowledge and culture you would like to share?  There are many travellers that would love to experience and learn about your way of life. 
-        .col-sm-4
-          .empty-space
-          p
-            b Meet travellers
-          p Being a culturist will give you the opportunity to meet, connect with and make friends with people from around the world.  You may find opportunities for collaborate with them.
-        .col-sm-4
-          .empty-space
-          p
-            b Earn money
-          p You can charge travellers to share experiences with you.  We hope that this gives you more options to be able to sustain your cultural heritage, environment and way of life.
-      
+      ol(style='font-size: 1.4em;')
+        li Explore cultural and heritage experiences offered by locals
+        li Connect with the culturist to arrange the time, date and payment of the activitiy
+        li Enjoy a new way of travelling with the locals
       .empty-space
-      p.text-center
+      p
+        a.btn.btn-large.btn-cta(href='/experiences/all', role='button') Find a way »
+      .empty-space
+
+    .col-sm-6
+      h2 Share a unique cultural experience
+      .empty-space
+      ol(style='font-size: 1.4em;')
+        li Signup to list your cultural experience for others to see
+        li Receive notifications of interest from interested travelers
+        li Enjoy sharing your local knowledge with the outside world
+      .empty-space
+      p
         a.btn.btn-large.btn-secondary(href='/signup', role='button') Lead the way »
+      .empty-space
+
+  hr
+
+
+  h2 Why be a Wayfairer?
+    .row
+      .col-sm-4
+        .empty-space
+        p
+          b Learn and grow
+        p As a Wayfairer you will get to experience the lives and cultures of the local people.  Hopefully this will give you a new perspective on your own life.  Culturists register with Wayfairer because they have unique knowledge and cultural riches to share.  You could learn about anything from a new dance style, to ancient rituals, from ethnic recipes and wild food gathering to traditional building practices. 
+      .col-sm-4
+        .empty-space
+        p
+          b Meet people
+        p During your experiences you will have the opportunity to interact with locals and other travellers in a meaningful way.  This is a great opportunity for forming new and diverse connections and friendships.
+      .col-sm-4
+        .empty-space
+        p
+          b Fair exchange
+        p You can participate in the empowerment of local communities through providing them with a source of income or through collaborating with them in other ways.  You may have skills and knowledge that you can contribute.
+
+    .empty-space
+    if (!user)
+      p.text-center
+      a.btn.btn-large.btn-cta(href='/signup', role='button') Sign up »
+  hr
+
+  h2 Why be a Culturist?
+    .row
+      .col-sm-4
+        .empty-space
+        p
+          b Share your knowledge and culture
+        p Do you have unique local knowledge and culture you would like to share?  There are many travellers that would love to experience and learn about your way of life. 
+      .col-sm-4
+        .empty-space
+        p
+          b Meet travellers
+        p Being a culturist will give you the opportunity to meet, connect with and make friends with people from around the world.  You may find opportunities for collaborate with them.
+      .col-sm-4
+        .empty-space
+        p
+          b Earn money
+        p You can charge travellers to share experiences with you.  We hope that this gives you more options to be able to sustain your cultural heritage, environment and way of life.
+    
+    .empty-space
+    if (!user)
+      p.text-center
+      a.btn.btn-large.btn-secondary(href='/signup', role='button') Lead the way »
