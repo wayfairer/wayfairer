@@ -55,6 +55,8 @@ block content
 			if (activity.acceptedCurrency)
 				p Accepted currency: #{activity.acceptedCurrency}
 
+			p.small Experience Contributed by #{ownerProfile.name}
+
 
 
 
@@ -72,10 +74,13 @@ block content
 					p.vcard--info.vcard--info__location 
 						b Location: 
 						| #{ownerProfile.location}
-				
+
+				if ownerProfile.website
 					p.vcard--info.vcard--info__website 
 						b Website: 
 						a(href='#{ownerProfile.website}' target='blank' rel='nofollow') #{ownerProfile.website}
+
+				if ownerProfile.bio
 					p.vcard--description
 						b Bio: 
 						| #{ownerProfile.bio}
@@ -103,7 +108,9 @@ block content
 						a.btn.btn.btn-secondary(href='/login') Login
 					else
 						// contact details
-						p Contact details here..
+						p Please contact 
+							a(href='mailto: support@wayfairer.co') support@wayfairer.co 
+							| and we will put you in touch with the culturist.
 
 				.modal-footer
 					button.btn.btn-default(type='button', data-dismiss='modal') Close
