@@ -1,6 +1,7 @@
 var Activity = require('../models/Activity');
 var User = require('../models/User');
 var cloudinary = require('cloudinary');
+var secrets = require('../config/secrets');
 
 /**
  * GET /experiences/all
@@ -46,6 +47,7 @@ exports.getActivity = function(req, res) {
         var isOwner = false;
         if (req.user) {
           isOwner = activity.userId == req.user.id ? true : false;
+          isOwner = req.user.email == secrets.wayfairer.admin ? true : isOwner;
         }
 
         res.render('activity/index', {
@@ -175,7 +177,7 @@ exports.getUpdateActivity = function(req, res) {
   var id = req.params.id;
 
   Activity.findById(id, function(err, activity) {
-    if (err || (activity.userId != req.user.id)) return res.render('error/not-found');
+    if (err || ( (activity.userId != req.user.id) && (req.user.email!=secrets.wayfairer.admin) )) return res.render('error/not-found');
 
     res.render('activity/edit', {
       title: 'Edit '+ activity.title,
@@ -199,7 +201,7 @@ exports.postUpdateActivity = function(req, res) {
 
   Activity.findById(aid, function(err, activity) {
 
-    if (err || !req.user || (activity.userId != req.user.id) ) {
+    if (err || !req.user || ( (req.user.email!=secrets.wayfairer.admin) && (activity.userId != req.user.id) ) ) {
       req.flash('errors', { msg: 'Something went wrong' });
       return res.redirect('/');
     }
