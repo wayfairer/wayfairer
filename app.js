@@ -84,7 +84,21 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(multer());
+app.use(multer({ 
+    dest: './logs/',
+    rename: function (fieldname, filename) {
+        return filename.replace(/\W+/g, '-').toLowerCase() + Date.now()
+    },
+    onFileUploadStart: function (file) {
+        console.log(file.fieldname + ' is starting ...')
+    },
+    onFileUploadData: function (file, data) {
+        console.log(data.length + ' of ' + file.fieldname + ' arrived')
+    },
+    onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path)
+    }
+}));
 
 app.use(expressValidator());
 app.use(methodOverride());

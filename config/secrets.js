@@ -18,8 +18,8 @@
 
 module.exports = {
 
-  db: process.env.MONGOLAB_URI || process.env.MONGODB || 'mongodb://heroku_app32722305:wayfairer2015!@ds027771.mongolab.com:27771/heroku_app32722305',
-  //db: process.env.MONGOLAB_URI || process.env.MONGODB || 'mongodb://localhost:27017/wayfairer',
+  //db: process.env.MONGOLAB_URI || process.env.MONGODB || 'mongodb://heroku_app32722305:wayfairer2015!@ds027771.mongolab.com:27771/heroku_app32722305',
+  db: process.env.MONGOLAB_URI || process.env.MONGODB || 'mongodb://localhost:27017/wayfairer',
 
   sessionSecret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
 
