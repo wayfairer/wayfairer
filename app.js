@@ -143,14 +143,19 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 
 app.get('/dashboard', passportConf.isAuthenticated, userController.getDashboard);
+
 app.get('/profile', passportConf.isAuthenticated, userController.getProfile);
 app.post('/profile/edit', passportConf.isAuthenticated, userController.postUpdatePublicProfile);
+
 app.get('/experiences/all', activityController.getAll);
+
 app.get('/edit/:id',  passportConf.isAuthenticated, activityController.getUpdateActivity);
 app.post('/edit/:id',  passportConf.isAuthenticated, activityController.postUpdateActivity);
+
 app.get('/view/:id', activityController.getActivity);
 app.get('/experience/new', activityController.getNewActivity);
 app.post('/experience/new', activityController.postNewActivity);
+
 app.get('/how-it-works', basicPageController.getHowItWorks);
 
 /**

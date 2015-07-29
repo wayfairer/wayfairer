@@ -23,10 +23,6 @@ module.exports = {
 
   sessionSecret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
 
-  wayfairer: {
-    admin: 'admin@wayfairer.co'
-  },
-
   cloudinary: { 
     cloud_name: 'dxn1mknsp', 
     api_key: '747552931236872', 
