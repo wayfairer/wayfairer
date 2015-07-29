@@ -84,7 +84,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(multer({ dest: './tmp/'}))
+app.use(multer({}));
 
 app.use(expressValidator());
 app.use(methodOverride());
