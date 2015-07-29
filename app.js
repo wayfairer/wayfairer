@@ -9,7 +9,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
-var multer  = require('multer')
+var multer  = require('multer');
 var csrf = require('lusca').csrf();
 var methodOverride = require('method-override');
 var cloudinary = require('cloudinary');
@@ -84,7 +84,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(multer({}));
+app.use(multer({ dest: './tmp/'}));
 
 app.use(expressValidator());
 app.use(methodOverride());
